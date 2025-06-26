@@ -11,7 +11,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiOperation, ApiResponse, ApiTags, ApiBody } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
-import { PdfParserService } from './pdf-parser.service';
+import { PdfParserService } from './claims-extractor.service';
 import { ParsePdfDto, ParsePdfResponseDto } from './dto/parse-pdf.dto';
 
 @ApiTags('PDF Parser')

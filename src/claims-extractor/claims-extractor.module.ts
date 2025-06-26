@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClaimsExtractorController } from './claims-extractor.controller';
 import { ClaimsExtractorService } from './claims-extractor.service';
-import { PdfClassifierService } from './services/pdf-classifier.service';
 import { ClaimExtract } from '../entities/claim-extract.entity';
 
 @Module({
@@ -14,7 +13,6 @@ import { ClaimExtract } from '../entities/claim-extract.entity';
   controllers: [ClaimsExtractorController],
   providers: [
     ClaimsExtractorService,
-    PdfClassifierService
   ],
 })
 export class ClaimsExtractorModule {}

@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ClaimsExtractorModule } from './claims-extractor/claims-extractor.module';
-import { ClaimExtract } from './entities/claim-extract.entity';
 import configuration from './config/configuration';
+import { ClaimExtract } from './entities/claim-extract.entity';
 
 @Module({
   imports: [
@@ -17,14 +17,20 @@ import configuration from './config/configuration';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'mysql',
-        host: config.get('database.host'),
-        port: config.get('database.port'),
-        username: config.get('database.username'),
-        password: config.get('database.password'),
-        database: config.get('database.database'),
+        url: `mysql://${config.get('database.username')}:${config.get('database.password')}@${config.get('database.host')}:${config.get('database.port')}/${config.get('database.database')}`,
         entities: [ClaimExtract],
-        synchronize: false,
-        logging: false,
+        synchronize: true,
+        retryAttempts: 10,
+        retryDelay: 3000,
+        autoLoadEntities: true,
+        connectTimeout: 30000,
+        acquireTimeout: 30000,
+        timeout: 30000,
+        extra: {
+          connectionLimit: 10,
+          acquireTimeout: 30000,
+          timeout: 30000,
+        },
       }),
     }),
     ThrottlerModule.forRootAsync({
